@@ -15,10 +15,6 @@ namespace ADONETPractice
         {
             var menu = new MainMenu();
             menu.Execute();
-            //ShowAllEmployees();
-            //ShowAllEmployeeTerritories();
-
-            //Console.ReadLine();
         }
     }
 }

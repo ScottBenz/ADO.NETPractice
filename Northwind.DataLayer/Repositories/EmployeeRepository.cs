@@ -94,6 +94,8 @@ namespace Northwind.DataLayer.Repositories
             employee.FirstName = dr["FirstName"].ToString();
 
             employee.EmpTerr = et;
+            // Convert from the Database into a string, then Parse it out as an int. 
+            // Avoids problems with Visual Studio automatically assigning.
             employee.EmpTerr.TerritoryId = int.Parse(dr["TerritoryID"].ToString());
             employee.EmpTerr.EmployeeId = int.Parse(dr["EmployeeID"].ToString());
 

@@ -12,22 +12,27 @@ namespace Northwind.DataLayer.Repositories
 {
     public class EmployeeRepository
     {
+        //Creating a new List of employees method.
         public List<Employee> GetAllEmployees()
         {
             List<Employee> employees = new List<Employee>();
 
+            //Our using statement is establishing a link our connection string in Settings.cs
             using (SqlConnection cn = new SqlConnection(Settings.ConnectionString))
             {
+                // This is the SQL command from the namespace System.Data.SQLClient.
                 SqlCommand cmd = new SqlCommand();
-
                 cmd.CommandText = "select e.FirstName, e.LastName, e.EmployeeID " +
                                   "From Employees as e ";
 
                 cmd.Connection = cn;
-                cn.Open();
+                cn.Open(); // must have "Open();" connection to query.
 
+                //Call ExecuteReader to have the command create a 
+                //data reader, this executes the SQL Statement.
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
+                    //Read() returns false when there is no more data.
                     while (dr.Read())
                     {
                         employees.Add(PopulateEmployeeDataReader(dr));
@@ -67,11 +72,11 @@ namespace Northwind.DataLayer.Repositories
             return employees;
         }
 
+        //This is our method that's creating our Employee definition from DataReader.
         private Employee PopulateEmployeeDataReader(SqlDataReader dr)
         {
             Employee employee = new Employee();
-            EmployeeTerritories et = new EmployeeTerritories();
-
+            
             employee.EmployeeId = (int) dr["EmployeeID"];
             employee.LastName = dr["LastName"].ToString();
             employee.FirstName = dr["FirstName"].ToString();
